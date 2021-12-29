@@ -2,10 +2,18 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def parse_wikipedia_table(url):
+def find_all(soup, element, start_at=None, **kwargs):
+    if start_at:
+        soup = soup.find(**start_at)
+        yield from soup.find_all_next(element, **kwargs)
+    else:
+        yield from soup.find_all(element, **kwargs)
+
+
+def parse_wikipedia_table(url, start_at=None):
     data = requests.get(url).text
     soup = BeautifulSoup(data, 'html.parser')
-    for table in soup.find_all('table', class_='wikitable'):
+    for table in find_all(soup, 'table', start_at=start_at, class_='wikitable'):
         headers = []
         data = []
         append_to_all_rows = []
