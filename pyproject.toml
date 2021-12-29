@@ -1,0 +1,22 @@
+[build-system]
+requires = ['flit_core >=3.2']
+build-backend = 'flit_core.buildapi'
+
+[project]
+name = 'anki-decks'
+version = '0.0.1'
+module = 'anki_decks'
+authors = [
+    { name = 'dcronkite', email = 'dcronkite+pypi@gmail.com' },
+]
+readme = 'README.md'
+description = 'Managing Anki decks.'
+home-page = 'https://github.com/dcronkite/anki_decks'
+requires = ['genanki', 'beautifulsoup4', 'requests']
+requires-python = '>=3.10'
+keywords = ['anki']
+classifiers = [  # https://pypi.org/classifiers/
+    'Development Status :: 1 - Planning',
+    'Programming Language :: Python :: 3 :: Only',
+    'License :: OSI Approved :: MIT License',
+]
