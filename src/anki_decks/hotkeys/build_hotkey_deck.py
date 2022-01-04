@@ -27,12 +27,22 @@ MODEL = genanki.Model(
 )
 
 
-def build_hotkey_deck(tsv_data: str, deck_id: int, deck_name: str):
+def build_hotkey_deck(tsv_data: str, deck_id: int, deck_name: str, reverse=False):
+    """
+
+    :param tsv_data:
+    :param deck_id:
+    :param deck_name:
+    :param reverse: if hotkey appears before action, set this to True
+    :return:
+    """
     deck = genanki.Deck(
         deck_id, deck_name
     )
 
     for action, hotkey in parse_tsv(tsv_data):
+        if reverse:
+            action, hotkey = hotkey, action
         note = genanki.Note(
             model=MODEL,
             fields=[hotkey, action]
