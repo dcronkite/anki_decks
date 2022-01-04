@@ -54,7 +54,6 @@ def main():
     )
     for note in get_chronology():
         deck.add_note(note)
-        deck.add_note(note)
     genanki.Package(deck).write_to_file(f'etruscans_{datetime.datetime.now().strftime("%Y%m%d%H%M%S")}.apkg')
 
 
