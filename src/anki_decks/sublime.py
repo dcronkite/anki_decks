@@ -8,7 +8,7 @@ DECK_ID = 12077563325
 
 
 def main():
-    deck = build_hotkey_deck(shortcuts, DECK_ID, 'Sublime', reverse=True)
+    deck = build_hotkey_deck(shortcuts, DECK_ID, 'Sublime', hotkey_first=True)
     genanki.Package(deck).write_to_file(f'sublime_{get_timestamp()}.apkg')
 
 
