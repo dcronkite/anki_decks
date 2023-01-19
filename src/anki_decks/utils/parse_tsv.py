@@ -4,3 +4,8 @@ def parse_tsv(s: str, *, expected=None, linesep='\n', sep='\t'):
         if expected and len(lst) != expected:
             raise ValueError(f'Only found {len(lst)} elements in line: {line}')
         yield [el.strip() for el in lst]
+
+
+def parse_tsv_from_file(path, *, expected=None, linesep='\n', sep='\t'):
+    with open(path) as fh:
+        yield from parse_tsv(fh.read(), expected=expected, linesep=linesep, sep=sep)
