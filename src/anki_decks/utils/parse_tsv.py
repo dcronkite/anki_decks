@@ -6,6 +6,6 @@ def parse_tsv(s: str, *, expected=None, linesep='\n', sep='\t'):
         yield [el.strip() for el in lst]
 
 
-def parse_tsv_from_file(path, *, expected=None, linesep='\n', sep='\t'):
-    with open(path) as fh:
+def parse_tsv_from_file(path, *, expected=None, linesep='\n', sep='\t', encoding='utf8'):
+    with open(path, encoding=encoding) as fh:
         yield from parse_tsv(fh.read(), expected=expected, linesep=linesep, sep=sep)
