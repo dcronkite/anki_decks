@@ -3,7 +3,7 @@ from pathlib import Path
 import genanki
 
 from anki_decks.utils.clean import format_text
-from anki_decks.utils.decks import get_deck
+from anki_decks.utils.decks import get_subcategory_deck, write_deck_to_file
 from anki_decks.utils.parse_tsv import parse_tsv_from_file
 from anki_decks.utils.timestamp import get_timestamp
 
@@ -35,7 +35,7 @@ MODEL = genanki.Model(
 
 
 def _get_sblgnt_deck(label):
-    return get_deck(DECK_ID, 'SBLGNT', label)
+    return get_subcategory_deck(DECK_ID, 'SBLGNT', label)
 
 
 def build_sblgnt_decks():
@@ -46,7 +46,7 @@ def build_sblgnt_decks():
     for book, verse, line in parse_tsv_from_file(DATA_PATH, expected=3, sep='=='):
         if book != prev_book:
             if deck is not None:
-                genanki.Package(deck).write_to_file(f'{format_text(prev_book)}_{get_timestamp()}.apkg')
+                write_deck_to_file(deck, format_text(prev_book))
             prev_book = book
             deck = _get_sblgnt_deck(book)
         note = genanki.Note(
@@ -54,8 +54,9 @@ def build_sblgnt_decks():
             fields=[book, verse, line, prev_line],
         )
         deck.add_note(note)
+        prev_line = line
     if book is not None:
-        genanki.Package(deck).write_to_file(f'{format_text(book)}_{get_timestamp()}.apkg')
+        write_deck_to_file(deck, format_text(book))
 
 
 if __name__ == '__main__':

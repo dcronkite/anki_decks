@@ -3,7 +3,7 @@ from pathlib import Path
 import genanki
 
 from anki_decks.utils.clean import format_text
-from anki_decks.utils.decks import get_deck
+from anki_decks.utils.decks import get_subcategory_deck, write_deck_to_file
 from anki_decks.utils.parse_tsv import parse_tsv_from_file
 from anki_decks.utils.timestamp import get_timestamp
 
@@ -36,7 +36,7 @@ MODEL = genanki.Model(
 
 
 def _get_poetry_deck(label):
-    return get_deck(DECK_ID, 'Poetry', label)
+    return get_subcategory_deck(DECK_ID, 'Poetry', label)
 
 
 def build_poetry_decks():
@@ -49,7 +49,7 @@ def build_poetry_decks():
         label = format_text(f'{author}_{title}')
         if label != prev_label:
             if deck is not None:
-                genanki.Package(deck).write_to_file(f'poetry_{prev_label}_{get_timestamp()}.apkg')
+                write_deck_to_file(deck, f'poetry_{prev_label}')
             prev_label = label
             deck = _get_poetry_deck(label)
         note = genanki.Note(
@@ -57,8 +57,10 @@ def build_poetry_decks():
             fields=[author, title, line, prev_line, prev_prev_line],
         )
         deck.add_note(note)
+        prev_prev_line = prev_line
+        prev_line = line
     if label is not None:
-        genanki.Package(deck).write_to_file(f'poetry_{label}_{get_timestamp()}.apkg')
+        write_deck_to_file(deck, f'poetry_{label}')
 
 
 if __name__ == '__main__':
