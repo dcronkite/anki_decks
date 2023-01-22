@@ -1,6 +1,6 @@
-import datetime
-
 import genanki
+
+from anki_decks.utils.decks import write_deck_to_file
 
 DECK_ID = 12117317529
 
@@ -54,7 +54,7 @@ def main():
     )
     for note in get_chronology():
         deck.add_note(note)
-    genanki.Package(deck).write_to_file(f'etruscans_{datetime.datetime.now().strftime("%Y%m%d%H%M%S")}.apkg')
+    write_deck_to_file(deck, 'etruscans')
 
 
 if __name__ == '__main__':

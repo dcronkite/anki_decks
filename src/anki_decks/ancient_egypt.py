@@ -1,7 +1,6 @@
-import datetime
-
 import genanki
 
+from anki_decks.utils.decks import write_deck_to_file
 from anki_decks.utils.parse_table import parse_wikipedia_table
 
 DECK_ID = 11683463763
@@ -103,7 +102,7 @@ def main():
         deck.add_note(note)
     for note in get_rulers_after_18th_dynasty():
         deck.add_note(note)
-    genanki.Package(deck).write_to_file(f'ancient_egypt_{datetime.datetime.now().strftime("%Y%m%d%H%M%S")}.apkg')
+    write_deck_to_file(deck, 'ancient_egypt')
 
 
 if __name__ == '__main__':

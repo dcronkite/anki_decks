@@ -2,8 +2,8 @@ from pathlib import Path
 
 import genanki
 
+from anki_decks.utils.decks import write_deck_to_file
 from anki_decks.utils.parse_tsv import parse_tsv_from_file
-from anki_decks.utils.timestamp import get_timestamp
 
 DECK_ID = 11783428918
 DATA_PATH = Path(__file__).parent / 'data' / 'personality_psych_data.csv'
@@ -41,7 +41,7 @@ def get_personality_psychology():
             fields=[model, target, description],
         )
         deck.add_note(note)
-    genanki.Package(deck).write_to_file(f'personality_psych_{get_timestamp()}.apkg')
+    write_deck_to_file(deck, 'personality_psych')
 
 
 if __name__ == '__main__':
